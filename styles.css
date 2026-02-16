@@ -1,0 +1,209 @@
+:root {
+    color-scheme: light dark;
+  }
+  
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+  
+  body {
+    font-family: "Crimson Pro", "Times New Roman", serif;
+    background: radial-gradient(circle at top, #fde2e4, #f9c0c1 45%, #eb8ba3);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    color: #4a2c2a;
+    overflow: hidden;
+  }
+  
+  .scene {
+    position: relative;
+    width: min(500px, 90vw);
+    height: calc(100vh - 4rem);
+    max-height: 800px;
+    perspective: 1200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .envelope {
+    width: 220px;
+    height: 140px;
+    background: linear-gradient(135deg, #fff8f0, #ffdede);
+    border: 3px solid #f4b8c1;
+    border-radius: 12px;
+    cursor: pointer;
+    position: relative;
+    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.25);
+    transform-style: preserve-3d;
+    transition: transform 0.8s cubic-bezier(0.4, 0.0, 0.2, 1), opacity 0.4s 0.6s;
+  }
+  
+  .envelope__body {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 0.4rem;
+    text-align: center;
+    padding: 1.25rem 1.25rem 1.5rem;
+    position: relative;
+  }
+  
+  .envelope__flap {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, #ffd6d9, #fff1f2);
+    clip-path: polygon(0 0, 100% 0, 50% 65%);
+    transform-origin: top;
+    z-index: 2;
+    transition: transform 0.8s cubic-bezier(0.65, 0, 0.35, 1);
+  }
+  
+  .envelope__hint {
+    font-size: 0.85rem;
+    letter-spacing: 0.3rem;
+    text-transform: uppercase;
+    color: #d28b9a;
+    position: absolute;
+    top: 0.6rem;
+    width: 100%;
+    z-index: 3;
+    pointer-events: none;
+    text-shadow: 0 1px 2px rgba(255, 255, 255, 0.8);
+  }
+  
+  .envelope__recipient {
+    font-size: 1.2rem;
+    letter-spacing: 0.35rem;
+    color: #b84f63;
+    text-transform: uppercase;
+  }
+  
+  .envelope__seal {
+    font-size: 2rem;
+    filter: drop-shadow(0 2px 2px rgba(0, 0, 0, 0.25));
+  }
+  
+  .letter {
+    position: absolute;
+    inset: auto;
+    width: 90%;
+    max-width: 420px;
+    height: 100%;
+    max-height: 100%;
+    opacity: 0;
+    transform: translateY(80px) rotateX(15deg) scale(0.9);
+    transform-origin: center bottom;
+    transition: opacity 0.4s ease, transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    pointer-events: none;
+    overflow: hidden;
+  }
+  
+  .letter__paper {
+    background: #fffdf7;
+    border-radius: 20px;
+    padding: 2.5rem;
+    box-shadow: 0 40px 80px rgba(0, 0, 0, 0.25);
+    border: 1px solid rgba(74, 44, 42, 0.1);
+    backdrop-filter: blur(6px);
+    line-height: 1.6;
+    font-size: 1.05rem;
+    height: 100%;
+    max-height: 100%;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(160, 69, 88, 0.35) transparent;
+  }
+  
+  .letter__intro,
+  .letter__closing {
+    font-weight: 500;
+    margin-bottom: 1rem;
+  }
+  
+  .letter__photo {
+    margin: 1.75rem 0;
+    text-align: center;
+  }
+  
+  .letter__photo img {
+    width: 100%;
+    border-radius: 16px;
+    object-fit: cover;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+    margin-bottom: 0.5rem;
+  }
+  
+  .letter__photo figcaption {
+    font-size: 0.9rem;
+    color: #a0646f;
+  }
+  
+  .letter__signature {
+    font-family: "Great Vibes", cursive;
+    font-size: 2.5rem;
+    color: #a04558;
+    margin-top: 0.5rem;
+  }
+  
+  .reset {
+    position: absolute;
+    bottom: 2rem;
+    right: 2rem;
+    background: rgba(255, 255, 255, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(6px);
+    color: #7a3c4d;
+    border-radius: 999px;
+    padding: 0.5rem 1.5rem;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .reset:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
+  }
+  
+  body.letter-open .envelope {
+    transform: translateY(-60px) rotateX(-65deg) scale(0.8);
+    opacity: 0;
+    pointer-events: none;
+  }
+  
+  body.letter-open .envelope__flap {
+    transform: rotateX(-150deg);
+  }
+  
+  body.letter-open .letter {
+    opacity: 1;
+    transform: translateY(0) rotateX(0) scale(1);
+    pointer-events: auto;
+  }
+  
+  @media (max-width: 600px) {
+    body {
+      padding: 1.5rem;
+    }
+  
+    .letter__paper {
+      padding: 2rem;
+    }
+  
+    .reset {
+      position: fixed;
+      bottom: 1rem;
+      right: 1rem;
+    }
+  }
